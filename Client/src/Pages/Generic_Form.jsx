@@ -1,18 +1,20 @@
 import React, { useState } from 'react';
-import { Button } from '@mui/material'
+import { Button } from '@mui/material';
 
 const Generic_Form = () => {
-  const [inputFields, setInputFields] = useState([{ value: '' }]);
+  const [inputFields, setInputFields] = useState([
+    { firstName: '', secondName: '' },
+  ]);
 
-  const handleChange = (index, event) => {
+  const handleChange = (index, fieldName, event) => {
     const values = [...inputFields];
-    values[index].value = event.target.value;
+    values[index][fieldName] = event.target.value;
     setInputFields(values);
   };
 
   const handleAddFields = () => {
     const values = [...inputFields];
-    values.push({ value: '' });
+    values.push({ firstName: '', secondName: '' });
     setInputFields(values);
   };
 
@@ -25,7 +27,6 @@ const Generic_Form = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log(inputFields); // Do something with the data
-
   };
 
   const renderInputFields = () => {
@@ -33,8 +34,16 @@ const Generic_Form = () => {
       <div key={index}>
         <input
           type="text"
-          value={field.value}
-          onChange={(event) => handleChange(index, event)}
+          value={field.firstName}
+          onChange={(event) => handleChange(index, 'firstName', event)}
+          placeholder="First Name"
+          style={{ padding: "10px", backgroundColor: '#9E9E9E', margin: '10px', borderRadius: "10px" }}
+        />
+        <input
+          type="text"
+          value={field.secondName}
+          onChange={(event) => handleChange(index, 'secondName', event)}
+          placeholder="Second Name"
           style={{ padding: "10px", backgroundColor: '#9E9E9E', margin: '10px', borderRadius: "10px" }}
         />
         <Button type="button" onClick={() => handleRemoveFields(index)}>
