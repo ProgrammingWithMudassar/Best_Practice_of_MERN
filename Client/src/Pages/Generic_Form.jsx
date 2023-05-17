@@ -13,10 +13,13 @@ const Generic_Form = () => {
   };
 
   const handleAddFields = () => {
-    const values = [...inputFields];
-    values.push({ firstName: '', secondName: '' });
-    setInputFields(values);
+    if (inputFields.length < 4) {
+      const values = [...inputFields];
+      values.push({ firstName: '', secondName: '' });
+      setInputFields(values);
+    }
   };
+
 
   const handleRemoveFields = (index) => {
     const values = [...inputFields];
