@@ -5,6 +5,7 @@ const Generic_Form = () => {
   const [inputFields, setInputFields] = useState([
     { firstName: '', secondName: '' },
   ]);
+  const [showMaxFieldsMessage, setShowMaxFieldsMessage] = useState(false);
 
   const handleChange = (index, fieldName, event) => {
     const values = [...inputFields];
@@ -17,14 +18,16 @@ const Generic_Form = () => {
       const values = [...inputFields];
       values.push({ firstName: '', secondName: '' });
       setInputFields(values);
+    } else {
+      setShowMaxFieldsMessage(true);
     }
   };
-
 
   const handleRemoveFields = (index) => {
     const values = [...inputFields];
     values.splice(index, 1);
     setInputFields(values);
+    setShowMaxFieldsMessage(false); // Reset the message when removing a field
   };
 
   const handleSubmit = (event) => {
@@ -60,9 +63,13 @@ const Generic_Form = () => {
     <div>
       <form onSubmit={handleSubmit}>
         {renderInputFields()}
-        <Button type="button" onClick={() => handleAddFields()}>
-          Add Field
-        </Button> <br />
+        {inputFields.length < 4 && !showMaxFieldsMessage && (
+          <Button type="button" onClick={() => handleAddFields()}>
+            Add Field
+          </Button>
+        )}
+        {showMaxFieldsMessage && <p>You cannot add more fields</p>}
+        <br />
         <Button type="submit" sx={{ width: "200px", mt: 4 }}>Submit</Button>
       </form>
     </div>
